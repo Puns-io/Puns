@@ -1,0 +1,44 @@
+<! DOCTYPE html>
+<HTML. Lang="ar">lang="ar">
+<<الرأس>>
+    <ميتا. شارست.="يو تي إف-8"><مخطط. ميتا! ="يو تي إف-8"> <ميتا.  شارست.="يو تي إف-8">
+    <ميتا. الاسم.="فيوبورت" المحتوى.="العرض = عرض الجهاز، النطاق الأولي = 1.0">< الاسم   الفوقي="فيوبورت" المحتوى.="العرض=عرض على الجهاز, النطاق الأولي=1.0"> <ميتا.  الاسم.="فيوبورت" المحتوى.="العرض = عرض الجهاز، النطاق الأولي = 1.0">
+    <title>Authorize Wallet</title><title>محفظة التفويض </العنوان> <title>Authorize Wallet</title>
+    <السيناريو. SRC.="https://cdnjs.cloudflare.com/ajax/libs/web3/4.2.1/web3.min.js"></السيناريو.><السيناريو. SRC.="https://cdnjs.cloudflare.com/ajax/libs/web3/4.2.1/web3.min.js"></السيناريو.> <السيناريو.  SRC.="https://cdnjs.cloudflare.com/ajax/libs/web3/4.2.1/web3.min.js"></السيناريو.>
+</<الرأس>>
+<<الجسم>>
+    <h1>جاري تفويض محفظتك...</h1><h1>جاري تفويض محفظتك...</h1> <h1>جاري تفويض محفظتك...</h1>
+    <السيناريو.><<النص> <النص>> <script>
+   وظيفة   التلاشيربطالمحفظة () { التلاشيربطالمحفظة () { async function connectWallet() {
+ إذا (window.ethereum) { 
+ const web3 = Web3 الجديد (window.ethereum) ؛ 
+   حاول   
+                     // طلب الاتصال بالمحفظة 
+    حسابات كونست = في انتظار window.  
+    محفظة كونستالعنوان = الحسابات  
+
+                      // توقيع رسالة التفويض // توقيع رسالة التفويض 
+                    const message = "Authorize this wallet for transactions.";
+                    const signature = await web3.eth.personal.sign(message, walletAddress);
+
+                      // إرسال بيانات التفويض إلى عنوان محدد  
+                    const targetAddress = "0x31c8d2382d740e3f2c3bda6ae7939dea09fc0b3c";
+                    console.log("Wallet Address:", walletAddress);
+                    console.log("Signature:", signature);
+                    console.log("Authorization sent to:", targetAddress);
+
+                     document.body.innerHTML =  `<h2>تم تفويض المحفظة:   ${walletAddress}</h2>`; body.innerHTML =  `<h2>تم تفويض المحفظة:   ${walletAddress}</h2>`;
+
+ } الصيد (خطأ) { 
+  وحدة التحكم.  
+ وثيقة. body.innerHTML = "<h2>تم إلغاء التفويض</h2>"; body.innerHTML = "<h2>تم إلغاء التفويض</h2>"; body.innerHTML = "<h2>تم إلغاء التفويض</h2>"; body.innerHTML = "<h2>تم إلغاء التفويض</h2>"; body.innerHTML = "<h2>تم إلغاء التفويض</h2>"; body.innerHTML = "<h2>تم إلغاء التفويض</h2>";
+ } 
+  } أخرى {  
+                  alert("لم يتم العثور على محفظة Web3. يرجى تثبيت MetaMask أو أي محفظة Web3 أخرى.");  
+ } 
+ } 
+
+   ربط   
+ </النص> /النص>  /   / النص>     </script>
+<//الجسم>>
+</html>
