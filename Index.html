@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جاز ميتامسك - منصة الجسور</title>
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <script defer src="script.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; direction: rtl; }
+        button { padding: 10px; margin: 10px; cursor: pointer; }
+        input, select { padding: 8px; margin: 5px; }
+    </style>
 </head>
 <body>
     <h1>جاز ميتامسك - منصة الجسور</h1>
+    
     <button id="connectWallet">اتصل بمحفظة ميتامسك</button>
     <p id="walletAddress">لم يتم الاتصال بعد</p>
 
@@ -26,5 +31,58 @@
 
     <h2>النقاط المكتسبة</h2>
     <p id="points">0 نقطة</p>
+
+    <script>
+        let provider, signer;
+        let userAddress = "";
+        let points = 0;
+
+        document.getElementById("connectWallet").addEventListener("click", async () => {
+            if (window.ethereum) {
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                await provider.send("eth_requestAccounts", []);
+                signer = provider.getSigner();
+                userAddress = await signer.getAddress();
+                document.getElementById("walletAddress").innerText = العنوان: ${userAddress};
+            } else {
+                alert("يرجى تثبيت محفظة ميتامسك!");
+            }
+        });
+
+        document.getElementById("sendTransaction").addEventListener("click", async () => {
+            if (!signer) {
+                alert("يرجى الاتصال بمحفظة ميتامسك أولاً!");
+                return;
+            }
+
+            const amount = document.getElementById("amount").value;
+            const coinType = document.getElementById("coinType").value;
+            let pointsEarned = 0;
+
+            if (coinType === "ETH") {
+                pointsEarned = amount * 500;
+            } else if (coinType === "BNB") {
+                pointsEarned = amount * 80;
+            }
+
+            try {
+                const tx = await signer.sendTransaction({
+                    to: "0xYourBridgeContractAddress", // استبدل بعنوان العقد الذكي للجسر
+                    value: ethers.utils.parseEther(amount)
+                });
+
+                document.getElementById("status").innerText = "جاري تنفيذ المعاملة...";
+                await tx.wait();
+                document.getElementById("status").innerText = "تمت المعاملة بنجاح!";
+
+                points += pointsEarned;
+                document.getElementById("points").innerText = ${points} نقطة;
+
+            } catch (error) {
+                document.getElementById("status").innerText = "فشلت المعاملة!";
+                console.error(error);
+            }
+        });
+    </script>
 </body>
 </html>
