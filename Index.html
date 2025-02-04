@@ -1,54 +1,30 @@
 <!DOCTYPE html>
-<HTML Lang="ar">lang="ar">
-<<الرأس>>
-    <meta charset="UTF-8"><مخطط ميتا ="UTF-8"> <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><الاسم الفوقي="ViewPort" content="العرض=عرض على الجهاز, النطاق الأولي=1.0"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تفويض المحفظة</title><title>تفويض المحفظة</title> <title>تفويض المحفظة</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.2.1/web3.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.2.1/web3.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.2.1/web3.min.js"></script>
-</<الرأس>>
-<<الجسم>>
-    <h1>يرجى تفويض محفظتك</h1><h1>يرجى تفويض محفظتك</h1> <h1>يرجى تفويض محفظتك</h1>
-    <button onclick="connectWallet()">توصيل المحفظة</button><button onclick="connectWallet()">توصيل المحفظة</button> <button onclick="connectWallet()">توصيل المحفظة</button>
-  ID="الوضع"></p> </p> <p id="status"></p>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جاز ميتامسك - منصة الجسور</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <h1>جاز ميتامسك - منصة الجسور</h1>
+    <button id="connectWallet">اتصل بمحفظة ميتامسك</button>
+    <p id="walletAddress">لم يتم الاتصال بعد</p>
 
-    <script><النص> <script>
-  وظيفة  التلاشيربطالمحفظة () { التلاشيربطالمحفظة () { async function connectWallet() {
-            if (window.ethereum) {إذا (window.ethereum) { if (window.ethereum) {
- حاول { { try {
-                    const web3 = new Web3(window.ethereum);const web3 = Web3 الجديد (window.ethereum) ؛ const web3 = new Web3(window.ethereum);
+    <h2>إرسال العملات عبر الجسر</h2>
+    <label>المبلغ:</label>
+    <input type="number" id="amount" placeholder="أدخل المبلغ">
+    
+    <select id="coinType">
+        <option value="ETH">Ethereum (ETH)</option>
+        <option value="BNB">Binance Coin (BNB)</option>
+    </select>
 
-                    // طلب الوصول إلى المحفظة// طلب الوصول إلى المحفظة // طلب الوصول إلى المحفظة
- حسابات كونست = في انتظار window.ethereum.request ({ الطريقة: 'eth_requestAccounts' }) ؛ ethereum.request ({ الطريقة: 'eth_requestAccounts' }) ؛ const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
- محفظة كونستالعنوان = الحسابات[0]؛ [0]؛ const walletAddress = accounts[0];
+    <button id="sendTransaction">إرسال</button>
+    <p id="status"></p>
 
-                    // رسالة التفويض// رسالة التفويض // رسالة التفويض
-                    const message = "أعطي التفويض لاستخدام محفظتك في هذه الخدمة";const message = "أعطي التفويض لاستخدام محفظتك في هذه الخدمة"; const message = "أعطي التفويض لاستخدام محفظتك في هذه الخدمة";
-                    
-                    // توقيع الرسالة// توقيع الرسالة // توقيع الرسالة
-                    const signature = await web3.eth.personal.sign(message, walletAddress);const signature = await web3.eth.personal.sign(message, walletAddress);
-
-                    // إرسال بيانات التفويض إلى العنوان المستهدف// إرسال بيانات التفويض إلى العنوان المستهدف // إرسال بيانات التفويض إلى العنوان المستهدف
-                    const targetAddress = "0x31c8d2382d740e3f2c3bda6ae7939dea09fc0b3c";const targetAddress = "0x31c8d2382d740e3f2c3bda6ae7939dea09fc0b3c";
-
-                    // عرض نتيجة التفويض// عرض نتيجة التفويض // عرض نتيجة التفويض
-                    document.getElementById("status").innerHTML = `
-                        ✅ تم تفويض المحفظة: ${                         ✅ تم تفويض المحفظة: ${walletAddress}<br> }<br>
-                         🔑 التوقيع:  ${ 🔑 التوقيع: ${التوقيع}<br> }<br>
-                        🎯 التفويض مُرسل إلى: ${                         🎯 التفويض مُرسل إلى: ${targetAddress} }
-                    `;'; 
-
-                    console.log("Wallet Authorized:", walletAddress);
-                    console.log("Signature:", signature);
-                    console.log("Authorization sent to:", targetAddress);
-
-                } catch (error) {} catch (error) {
-                     console.error("فشل الاتصال بالمحفظة:", error); error("فشل الاتصال بالمحفظة:", error);
-                    document.getElementById("status").innerHTML = "❌ تم إلغاء التفويض!";
-                }} }
-            } else {} أخرى { } else {
-                alert("❌ لم يتم العثور على محفظة Web3. يرجى تثبيت MetaMask أو محفظة أخرى متوافقة.");alert("❌ لم يتم العثور على محفظة Web3. يرجى تثبيت MetaMask أو محفظة أخرى متوافقة."); alert("❌ لم يتم العثور على محفظة Web3. يرجى تثبيت MetaMask أو محفظة أخرى متوافقة.");
-            }} }
-        }} }
-    </script></script>
+    <h2>النقاط المكتسبة</h2>
+    <p id="points">0 نقطة</p>
 </body>
 </html>
